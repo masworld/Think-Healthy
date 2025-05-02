@@ -7,7 +7,7 @@ const ProjectCard = ({ project, onAccept }) => {
                     <h2 className="text-lg font-semibold text-gray-800">
                         {project.title}
                     </h2>
-                    <button className="text-gray-500 hover:text-gray-700">
+                    {/*  <button className="text-gray-500 hover:text-gray-700">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-5"
@@ -22,7 +22,7 @@ const ProjectCard = ({ project, onAccept }) => {
                                 d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
                             />
                         </svg>
-                    </button>
+                    </button> */}
                 </div>
                 <p className="text-sm text-gray-600">Job No: {project.jobNo}</p>
                 <p className="text-sm text-gray-600">

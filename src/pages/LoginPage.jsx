@@ -1,5 +1,5 @@
 // LoginPage.jsx
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ThinkHealthyLogo from "../components/ThinkHealthyLogo";
 
 const LoginPage = ({ onLogin }) => {
@@ -7,13 +7,14 @@ const LoginPage = ({ onLogin }) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
+    const passwordRef = useRef(null);
+
     const handleLogin = () => {
         if (!username || !password) {
             setError("Please enter both username and password");
             return;
         }
 
-        // In a real app, this would validate against a backend
         if (username === "admin" && password === "admin") {
             onLogin(username);
         } else {
@@ -53,6 +54,12 @@ const LoginPage = ({ onLogin }) => {
                             placeholder="Enter your username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    passwordRef.current.focus();
+                                }
+                            }}
                         />
                     </div>
 
@@ -75,6 +82,7 @@ const LoginPage = ({ onLogin }) => {
                                     handleLogin();
                                 }
                             }}
+                            ref={passwordRef}
                         />
                     </div>
 

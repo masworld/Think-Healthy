@@ -4,7 +4,6 @@ import ProjectCard from "../components/ProjectCard";
 import TaskDetailsModal from "../components/TaskDetailsModal";
 import Header from "../components/Header";
 
-// Sample project data
 const initialProjects = [
     {
         id: "Job_011",
@@ -14,8 +13,7 @@ const initialProjects = [
         endDate: "2025-05-1",
         totalSnags: 96,
         status: "Pending",
-        description:
-            "Commercial building construction project with multiple phases including foundation work, structural framing, and interior finishing.",
+        description: "Commercial building construction project...",
     },
     {
         id: "Rail_Job_1",
@@ -65,43 +63,36 @@ const initialProjects = [
 ];
 
 const ProjectsDashboard = ({ onLogout, username }) => {
-    const [projects, setProjects] = useState(initialProjects);
+    const [projects] = useState(initialProjects);
+    const [searchTerm, setSearchTerm] = useState("");
     const [activeModal, setActiveModal] = useState(null);
 
-    const handleAccept = (project) => {
-        setActiveModal(project);
-    };
-
-    const handleCloseModal = () => {
-        setActiveModal(null);
-    };
+    const handleAccept = (project) => setActiveModal(project);
+    const handleCloseModal = () => setActiveModal(null);
 
     const handleCompleteTask = (projectId, images, description) => {
-        // In a real application, you would upload the images and submit the data to your backend
         console.log(
             `Completing task ${projectId} with ${images.length} images and description: ${description}`
         );
-
-        // Update the project status locally
-        const updatedProjects = projects.map((project) => {
-            if (project.id === projectId) {
-                return { ...project, status: "Completed" };
-            }
-            return project;
-        });
-
-        setProjects(updatedProjects);
         setActiveModal(null);
     };
 
+    const filteredProjects = projects.filter(
+        (project) =>
+            project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            project.jobNo.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className="min-h-screen bg-gray-70">
-            {/* Header */}
-            <Header onLogout={onLogout} username={username} />
+            <Header
+                onLogout={onLogout}
+                username={username}
+                onSearch={setSearchTerm}
+            />
 
-            {/* Project Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
-                {projects.map((project) => (
+                {filteredProjects.map((project) => (
                     <ProjectCard
                         key={project.id}
                         project={project}
@@ -110,7 +101,6 @@ const ProjectsDashboard = ({ onLogout, username }) => {
                 ))}
             </div>
 
-            {/* Task Details Modal */}
             {activeModal && (
                 <TaskDetailsModal
                     project={activeModal}
